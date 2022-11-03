@@ -1,0 +1,16 @@
+.oos-container{
+    position: relative;
+    display: inline-block;
+}
+.oos-emailbox{
+    display: inline-block;
+    margin-right: 10px;
+    width: 220px;
+}
+#oos-button{
+    float: right;
+}
+
+.oos-display-none {
+    display: none;
+}

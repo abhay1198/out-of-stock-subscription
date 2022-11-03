@@ -1,0 +1,52 @@
+<?php
+/**
+ * Abhay
+ * 
+ * PHP version 7
+ * 
+ * @category  Abhay
+ * @package   Abhay_OutOfStockSubscription
+ * @author    Abhay Agrawal <abhay@gmail.com>
+ * @copyright 2022 Copyright © Abhay
+ * @license   See COPYING.txt for license details.
+ * @link      https://github.com/abhay1198/out-of-stock-subscription
+ */
+
+$product = $block->getCurrentProductData();
+$productId = $product['id'];
+$productType = $product['type'];
+$stockStatus = $product['stock'];
+$productName = $product['name'];
+
+$action = $block->getUrl('outofstocksubscription/product/addSubscriber');
+
+?>
+<div class="oos-container oos-display-none">
+    <div class="oos-emailbox">
+        <input type="text" name='email' id="oos-email" 
+            placeholder="<?=$block->escapeHtml(__("Subscribe Using Your Email Id")) ?>" />
+    </div>
+    <button type="button" title="<?= $block->escapeHtml(__("Subscribe Me")) ?>" 
+        class="action primary tocart" id="oos-button">
+        <span><?=$block->escapeHtml(__("Subscribe Me")); ?></span>
+    </button>
+</div>
+
+<?php
+$formData = [
+    'button' => '#oos-button',
+    'email'  => '#oos-email',
+    'productId' => $productId,
+    'productName' => $productName,
+    'stockStatus' => $stockStatus,
+    'action' => $action,
+];
+$serializedFormData = $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($formData);
+?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "subsribe": <?php /* @noEscape */ echo $serializedFormData; ?>
+        }
+    }
+</script>
