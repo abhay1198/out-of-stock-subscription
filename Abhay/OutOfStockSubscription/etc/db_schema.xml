@@ -16,10 +16,13 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="out_of_stock_subscription" resource="default" engine="innodb" comment="Out Of Stock Notification">
         <column xsi:type="int" name="id" unsigned="true" nullable="false" padding="10" identity="true" comment="Id"/>
+        <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" comment="Customer/User Id"/>
         <column xsi:type="text" name="email" nullable="true" comment="Email"/>
         <column xsi:type="int" name="product_id" nullable="true" comment="Product Id"/>
         <column xsi:type="text" name="product_name" nullable="true" comment="Product Name"/>
         <column xsi:type="int" name="status" nullable="true" comment="Status"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="false" comment="Update Time"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>

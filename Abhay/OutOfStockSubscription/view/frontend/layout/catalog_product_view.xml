@@ -19,7 +19,7 @@
     </head>
     <body>
         <referenceContainer name="product.info.main">
-            <block class="Abhay\OutOfStockSubscription\Block\OutOfStockProduct" name="outofstock.product.status" template="Abhay_OutOfStockSubscription::outofstockproduct.phtml" cacheable="false"/>
+            <block class="Abhay\OutOfStockSubscription\Block\OutOfStockProduct" name="outofstock.product.status" template="Abhay_OutOfStockSubscription::outofstockproduct.phtml" ifconfig="out_of_stock_subscription/general/enable" cacheable="false"/>
         </referenceContainer>
     </body>
 </page>

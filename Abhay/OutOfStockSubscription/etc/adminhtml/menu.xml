@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Abhay
+ * 
+ * PHP version 7
+ * 
+ * @category  Abhay
+ * @package   Abhay_OutOfStockSubscription
+ * @author    Abhay Agrawal <abhay@gmail.com>
+ * @copyright 2022 Copyright © Abhay
+ * @license   See COPYING.txt for license details.
+ * @link      https://github.com/abhay1198/out-of-stock-subscription
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+    	<add id="Abhay_OutOfStockSubscription::manage" 
+            title="OOS Subscription" 
+            module="Abhay_OutOfStockSubscription" 
+            sortOrder="1" 
+            parent="Magento_Catalog::catalog_categories" 
+            action="outofstocksubscription/manage/index" 
+            resource="Abhay_OutOfStockSubscription::manage" />
+   	</menu>
+</config>
