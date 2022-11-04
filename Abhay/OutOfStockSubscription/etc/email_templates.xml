@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Abhay
+ * 
+ * PHP version 7
+ * 
+ * @category  Abhay
+ * @package   Abhay_OutOfStockSubscription
+ * @author    Abhay Agrawal <abhay@gmail.com>
+ * @copyright 2022 Copyright © Abhay
+ * @license   See COPYING.txt for license details.
+ * @link      https://github.com/abhay1198/out-of-stock-subscription
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="out_of_stock_subscription_general_subscription_email" label="Subscription Email Template" file="subscription.html" type="html" module="Abhay_OutOfStockSubscription" area="frontend"/>
+</config>

@@ -109,12 +109,14 @@
 				</item>
 			</argument>
 		</column>
-		<column name="product_name">
+		<column name="product_name" class="Abhay\OutOfStockSubscription\Ui\Component\Listing\Columns\Productlink">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="filter" xsi:type="string">text</item>
 					<item name="label" xsi:type="string" translate="true">Product Name</item>
 					<item name="sortOrder" xsi:type="number">5</item>
+					<item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+            		<item name="visible" xsi:type="boolean">true</item> 
 				</item>
 			</argument>
 		</column>

@@ -14,6 +14,8 @@ define([
                 var productId = self.options.productId;
                 var productName = self.options.productName;
                 var action = self.options.action;
+                var errorMsg = self.options.errorMsg;
+                var error = self.options.error;
 
                 if (stockStatus == 0) {
                     $(".oos-container").removeClass("oos-display-none");
@@ -40,6 +42,15 @@ define([
                                 console.log("saved");
                             }
                        });
+                    } else{
+                        var errorMessage;
+                        if(email == "" ) {
+                           
+                        } else {
+                            errorMessage = errorMsg;
+                        }
+                        $(error).append("<b>"+errorMessage+"</b>");
+                        $(error).css("display","inline-block");
                     }
                 });
             }

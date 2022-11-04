@@ -19,8 +19,11 @@ $stockStatus = $product['stock'];
 $productName = $product['name'];
 
 $action = $block->getUrl('outofstocksubscription/product/addSubscriber');
+$helper = $this->helper('Abhay\OutOfStockSubscription\Helper\Data');
 
+$errorMsg = __("Email is not valid");
 ?>
+
 <div class="oos-container oos-display-none">
     <div class="oos-emailbox">
         <input type="text" name='email' id="oos-email" 
@@ -31,7 +34,7 @@ $action = $block->getUrl('outofstocksubscription/product/addSubscriber');
         <span><?=$block->escapeHtml(__("Subscribe Me")); ?></span>
     </button>
 </div>
-
+<div id="oos-error" class="message"></div>
 <?php
 $formData = [
     'button' => '#oos-button',
@@ -40,6 +43,8 @@ $formData = [
     'productName' => $productName,
     'stockStatus' => $stockStatus,
     'action' => $action,
+    'errorMsg' => $errorMsg,
+    'error' => '#oos-error',
 ];
 $serializedFormData = $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($formData);
 ?>
