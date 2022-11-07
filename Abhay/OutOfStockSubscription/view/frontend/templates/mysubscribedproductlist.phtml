@@ -13,8 +13,50 @@
  */
 
 $subscribedProduct = $block->getSubscribedProductCollection();
-foreach ($subscribedProduct as $product)
-{
-    echo $product->getEmail();
-    echo $product->getProductName();
-}
+?>
+<?php if ($subscribedProduct && count($subscribedProduct)): ?>
+<div class="oos-product-container">
+    <table class="oos-table">
+        <thead>
+            <tr class="oos-table-tr-head">
+                <th class="oos-table-image"><?= $block->escapeHtml(__('Image')) ?></th>
+                <th class="oos-table-product-name"><?= $block->escapeHtml(__('Product Name')) ?></th>
+                <th class="oos-table-status"><?= $block->escapeHtml(__('Notification Status')) ?></th>
+                <th class="oos-table-action"><?= $block->escapeHtml(__('Action')) ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($subscribedProduct as $prduct): ?>
+            <tr class="oos-table-row">
+                <td class="oos-table-image">
+                    <?php
+                        $productId = $prduct->getProductId();
+                        $imgUrl = $block->getProductImage($productId);
+                    ?>
+                    <div><img src="<?= /* @noEscape */  $imgUrl; ?>" alt="product-image"/></div>
+                </td>
+                <td class="oos-table-product-name">
+                    <?php
+                        $product = $block->getProductDataUsingId($productId);
+                        echo $block->escapeHtml($product->getName());
+                    ?>
+                </td>
+                <td class="oos-table-status"><?= $block->escapeHtml($prduct->getStatus() == 1) ? "Notified" : "Pending";?></td>
+                <td class="oos-table-action-delete">
+                    <a href="<?= /* @noEscape */
+                        $block->getUrl('outofstocksubscription/product/delete', ['id'=>$prduct->getId()])?>">
+                            <?= /* @noEscape */ $block->escapeHtml(__('Delete')) ?>
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<?php if ($block->getPagerHtml()): ?>
+    <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml(); ?></div>
+<?php endif ?>
+<?php else: ?>
+    <?= $block->escapeHtml(__('You have not Subscripted any product at this time!')) ?>
+<?php endif ?>
+

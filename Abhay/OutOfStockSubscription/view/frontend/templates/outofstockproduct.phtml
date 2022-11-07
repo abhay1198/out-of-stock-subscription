@@ -13,6 +13,7 @@
  */
 
 $product = $block->getCurrentProductData();
+$isLoggedin = $block->isCustomerLoggedIn();
 $productId = $product['id'];
 $productType = $product['type'];
 $stockStatus = $product['stock'];
@@ -20,21 +21,20 @@ $productName = $product['name'];
 
 $action = $block->getUrl('outofstocksubscription/product/addSubscriber');
 $helper = $this->helper('Abhay\OutOfStockSubscription\Helper\Data');
-
 $errorMsg = __("Email is not valid");
-?>
-
-<div class="oos-container oos-display-none">
-    <div class="oos-emailbox">
-        <input type="text" name='email' id="oos-email" 
-            placeholder="<?=$block->escapeHtml(__("Subscribe Using Your Email Id")) ?>" />
+if($isLoggedin) { ?>
+    <div class="oos-container oos-display-none">
+        <div class="oos-emailbox">
+            <input type="text" name='email' id="oos-email" 
+                placeholder="<?=$block->escapeHtml(__("Subscribe Using Your Email Id")) ?>" />
+        </div>
+        <button type="button" title="<?= $block->escapeHtml(__("Subscribe Me")) ?>" 
+            class="action primary tocart" id="oos-button">
+            <span><?=$block->escapeHtml(__("Subscribe Me")); ?></span>
+        </button>
     </div>
-    <button type="button" title="<?= $block->escapeHtml(__("Subscribe Me")) ?>" 
-        class="action primary tocart" id="oos-button">
-        <span><?=$block->escapeHtml(__("Subscribe Me")); ?></span>
-    </button>
-</div>
-<div id="oos-error" class="message"></div>
+    <div id="oos-error" class="message"></div>
+<?php } ?>
 <?php
 $formData = [
     'button' => '#oos-button',

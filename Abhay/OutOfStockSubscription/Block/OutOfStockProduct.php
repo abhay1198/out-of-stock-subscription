@@ -22,10 +22,12 @@ class OutOfStockProduct extends \Magento\Framework\View\Element\Template
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         StockRegistryInterface $stockRegistryInterface,
+        \Magento\Customer\Model\Session $customer,
         array $data = []
     ) {
         $this->registry = $registry;
         $this->stockRegistryInterface = $stockRegistryInterface;
+        $this->customer = $customer;
         parent::__construct($context, $data);
     }
 
@@ -38,5 +40,12 @@ class OutOfStockProduct extends \Magento\Framework\View\Element\Template
         $productStock = $this->stockRegistryInterface->getStockItem($outOfStockProduct['id']);
         $outOfStockProduct['stock'] = $productStock->getData()['is_in_stock'];
         return $outOfStockProduct;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isCustomerLoggedIn() {
+        return $this->customer->isLoggedIn();
     }
 }
