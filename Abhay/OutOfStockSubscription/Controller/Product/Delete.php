@@ -22,14 +22,22 @@ class Delete extends AbstractAccount
  
     public function __construct(
         Context $context,
-        \Abhay\OutOfStockSubscription\Model\SubscriptionFactory $subscriptionFactory
+        \Abhay\OutOfStockSubscription\Model\SubscriptionFactory $subscriptionFactory,
+        \Magento\Customer\Model\Session $customerSession,
     ) {
         $this->_subscription= $subscriptionFactory;
+        $this->customerSession = $customerSession;
         parent::__construct($context);
     }
  
     public function execute()
     {
-        
+        $subscriptionId = $this->getRequest()->getParam('id');
+        $customerId = $this->customerSession->getCustomerId();
+        $model = $this->_subscription->create()->load($subscriptionId);
+        $model->delete();
+        $this->messageManager->addSuccess(__('Subscription(s) deleted successfully.'));
+        $resultRedirect = $this->resultRedirectFactory->create();
+        return $resultRedirect->setPath('*/*/');
     }
 }

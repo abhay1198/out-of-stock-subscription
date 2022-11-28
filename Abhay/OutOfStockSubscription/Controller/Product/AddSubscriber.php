@@ -50,7 +50,13 @@ class AddSubscriber extends \Magento\Framework\App\Action\Action
         $customerId = $customer->getId();
 
         $model = $this->subscription->create();
-        if($email) {
+        $subscriptionCollection = $model->getCollection()
+            ->addFieldToFilter("email", ['eq' => $email])
+            ->addFieldToFilter("product_id", ['eq' => $id]);
+
+        if($subscriptionCollection->getSize() > 0) {
+            $this->messageManager->addSuccess(__('You have already subscribed the product with this Email ID.'));
+        } else {
             $model->setUserId($customerId);
             $model->setEmail($email);
             $model->setProductId($id);
@@ -58,6 +64,7 @@ class AddSubscriber extends \Magento\Framework\App\Action\Action
             $model->setStatus('0');
             $model->setCreatedAt($time);
             $model->setModel($model)->save();
+            $this->messageManager->addSuccess(__('We will notify you when product will be back in stock.'));
         }
     }
 }

@@ -12,23 +12,31 @@
 #oos-button{
     float: right;
 }
-
 .oos-display-none {
     display: none;
 }
-table {
-    border-collapse: collapse;
-    width: 100%;
+tr.oos-table-tr-head {
+    background: #faebd7;
 }
-th, td {
-    text-align: left;
-    padding: 8px;
-} 
-tr:nth-child(even) {
-    background-color: Lightgreen;
+th.oos-table-image {
+    text-align: center;
 }
-
+th.oos-table-product-name {
+    text-align: center;
+}
+th.oos-table-status {
+    text-align: center;
+}
+td.oos-table-product-name {
+    text-align: center;
+}
 td.oos-table-image {
+    width: 80px;
+}
+td.oos-table-status {
+    text-align: center;
+}
+td.oos-table-action-delete {
     width: 50px;
     height: 50px;
 }

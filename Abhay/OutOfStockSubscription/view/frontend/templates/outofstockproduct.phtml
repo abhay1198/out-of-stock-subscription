@@ -22,6 +22,7 @@ $productName = $product['name'];
 $action = $block->getUrl('outofstocksubscription/product/addSubscriber');
 $helper = $this->helper('Abhay\OutOfStockSubscription\Helper\Data');
 $errorMsg = __("Email is not valid");
+$emptyMsg = __("Please add your email Id");
 if($isLoggedin) { ?>
     <div class="oos-container oos-display-none">
         <div class="oos-emailbox">
@@ -45,6 +46,7 @@ $formData = [
     'action' => $action,
     'errorMsg' => $errorMsg,
     'error' => '#oos-error',
+    'emptyMsg' => $emptyMsg,
 ];
 $serializedFormData = $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($formData);
 ?>

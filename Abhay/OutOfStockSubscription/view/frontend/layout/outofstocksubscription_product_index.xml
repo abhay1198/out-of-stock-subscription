@@ -15,6 +15,9 @@
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="customer_account"/>
+    <head>
+        <css src="Abhay_OutOfStockSubscription::css/style.css"/>
+    </head>
     <body>
         <referenceContainer name="content">
             <block class="Abhay\OutOfStockSubscription\Block\MySubscribedProductList" name="outofstock.product.list" template="Abhay_OutOfStockSubscription::mysubscribedproductlist.phtml" cacheable="false" ifconfig="out_of_stock_subscription/general/enable"/>

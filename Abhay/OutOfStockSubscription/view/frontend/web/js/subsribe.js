@@ -16,6 +16,7 @@ define([
                 var action = self.options.action;
                 var errorMsg = self.options.errorMsg;
                 var error = self.options.error;
+                var emptyMsg = self.options.emptyMsg;
 
                 if (stockStatus == 0) {
                     $(".oos-container").removeClass("oos-display-none");
@@ -45,7 +46,7 @@ define([
                     } else{
                         var errorMessage;
                         if(email == "" ) {
-                           
+                            errorMessage = emptyMsg;
                         } else {
                             errorMessage = errorMsg;
                         }
