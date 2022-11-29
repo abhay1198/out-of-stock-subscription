@@ -22,10 +22,12 @@ class Delete extends AbstractAccount
  
     public function __construct(
         Context $context,
+        \Magento\Framework\Json\Helper\Data $jsonData,
         \Abhay\OutOfStockSubscription\Model\SubscriptionFactory $subscriptionFactory,
         \Magento\Customer\Model\Session $customerSession,
     ) {
         $this->_subscription= $subscriptionFactory;
+        $this->jsonData = $jsonData;
         $this->customerSession = $customerSession;
         parent::__construct($context);
     }
@@ -36,8 +38,14 @@ class Delete extends AbstractAccount
         $customerId = $this->customerSession->getCustomerId();
         $model = $this->_subscription->create()->load($subscriptionId);
         $model->delete();
-        $this->messageManager->addSuccess(__('Subscription(s) deleted successfully.'));
-        $resultRedirect = $this->resultRedirectFactory->create();
-        return $resultRedirect->setPath('*/*/');
+        $this->getResponse()->setHeader('Content-type', 'application/javascript');
+        $this->getResponse()->setBody(
+            $this->jsonData->jsonEncode(
+                [
+                    'success' => false,
+                    'message' => __("Subscription of the Product delete Successfully") 
+                ]
+            )
+        );
     }
 }

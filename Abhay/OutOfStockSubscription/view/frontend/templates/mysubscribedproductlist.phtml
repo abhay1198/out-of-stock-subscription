@@ -19,7 +19,6 @@ $subscribedProduct = $block->getSubscribedProductCollection();
     <table class="oos-table">
         <thead>
             <tr class="oos-table-tr-head">
-                <th class="select-checkbox"><input type="checkbox" id="selectAll"><label for="selectAll"></label></th>
                 <th class="oos-table-image"><?= $block->escapeHtml(__('Image')) ?></th>
                 <th class="oos-table-product-name"><?= $block->escapeHtml(__('Product Name')) ?></th>
                 <th class="oos-table-status"><?= $block->escapeHtml(__('Notification Status')) ?></th>
@@ -29,12 +28,6 @@ $subscribedProduct = $block->getSubscribedProductCollection();
         <tbody>
             <?php foreach ($subscribedProduct as $prduct): ?>
             <tr class="oos-table-row">
-                <td>
-                    <span class="select-checkbox">
-						<input type="checkbox" class="product_checkbox" id="<?php echo $prduct->getProductId(); ?>">
-						<label for="selectOne"></label>
-					</span>
-                </td>
                 <td class="oos-table-image">
                     <?php
                         $productId = $prduct->getProductId();
@@ -68,4 +61,10 @@ $subscribedProduct = $block->getSubscribedProductCollection();
 <?php else: ?>
     <?= $block->escapeHtml(__('You have not Subscripted any product at this time!')) ?>
 <?php endif ?>
-
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "myproduct": ""
+        }
+    }
+</script>

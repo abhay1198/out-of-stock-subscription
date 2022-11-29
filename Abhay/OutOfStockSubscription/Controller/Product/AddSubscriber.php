@@ -27,6 +27,7 @@ class AddSubscriber extends \Magento\Framework\App\Action\Action
         \Magento\Customer\Model\CustomerFactory $customerModel,
         \Magento\Catalog\Model\Product $product,
         \Abhay\OutOfStockSubscription\Model\SubscriptionFactory $subscriptionFactory,
+        \Abhay\OutOfStockSubscription\Helper\Email $email,
         \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->resultJson = $resultJson;
@@ -34,6 +35,7 @@ class AddSubscriber extends \Magento\Framework\App\Action\Action
         $this->customerModel = $customerModel;
         $this->subscription = $subscriptionFactory;
         $this->product = $product;
+        $this->email = $email;
         $this->_storeManager = $storeManager; 
         parent::__construct($context);
     }
@@ -48,6 +50,11 @@ class AddSubscriber extends \Magento\Framework\App\Action\Action
         $websiteID = $this->_storeManager->getStore()->getWebsiteId();
         $customer = $this->customerModel->create()->setWebsiteId($websiteID)->loadByEmail($email);
         $customerId = $customer->getId();
+
+        $customer = $this->customerModel->create()->getCollection()->addFieldToFilter('email', ['eq'=>$email]);
+        foreach ($customer as $myInfo) {
+            $customerName = $myInfo->getFirstname()." ".$myInfo->getLastname();
+        }
 
         $model = $this->subscription->create();
         $subscriptionCollection = $model->getCollection()
@@ -64,7 +71,54 @@ class AddSubscriber extends \Magento\Framework\App\Action\Action
             $model->setStatus('0');
             $model->setCreatedAt($time);
             $model->setModel($model)->save();
+            $this->sendEmail($customerName,$email,$this->getStoreId());
             $this->messageManager->addSuccess(__('We will notify you when product will be back in stock.'));
         }
+    }
+
+    public function getStoreId()
+    {
+        return $this->_storeManager->getStore()->getId();
+    }
+
+    /**
+     * Send Notification Email
+     *
+     * @param [string] $customerName
+     * @param [string] $customerEmail
+     * @param [int]    $storeId
+     * @param [int]    $orderId
+     * 
+     * @return void
+     */
+    public function sendEmail($customerName, $customerEmail, $storeId)
+    {
+        $senderInfo = [
+            'name' =>$this->email->getConfig('trans_email/ident_general/name'),
+            'email' => $this->email->getConfig('trans_email/ident_general/email'),
+        ];
+        $receiverInfo = [
+            'name' => $customerName,
+            'email' => $customerEmail,
+        ];
+
+        $emailTemplateVariables = [];
+        $id = $this->getRequest()->getParam('productId');
+        $email = $this->getRequest()->getParam('email');
+
+        $productCollection = $this->product->load($id);
+        $customer = $this->customerModel->create()->getCollection()->addFieldToFilter('email', ['eq'=>$email]);
+        foreach ($customer as $myInfo) {
+            $customerName = $myInfo->getFirstname()." ".$myInfo->getLastname();
+        }
+        $emailTempVariables['customerName'] = $customerName;
+        $emailTempVariables['productName'] = $productCollection->getName();
+
+        $this->email->sendProductSubscriptionMail(
+            $emailTemplateVariables,
+            $senderInfo,
+            $receiverInfo,
+            $storeId
+        );
     }
 }
